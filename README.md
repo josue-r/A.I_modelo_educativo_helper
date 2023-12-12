@@ -1,5 +1,5 @@
 # A.I_modelo_educativo_helper
-Workmate for teachers in Mexico to leverage new educational model task using A.I
+Asistente for teachers in Mexico to leverage new educational model task using A.I
 
 ---
 ### Cambio en el Modelo Educativo en México: Desafíos y Soluciones
