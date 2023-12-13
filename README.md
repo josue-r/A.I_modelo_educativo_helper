@@ -30,3 +30,16 @@ La implementación de estos recursos:
 - **Ahorra tiempo** y **refuerza** la práctica docente.
 
 ---
+
+# Como funciona
+
+Cada institucion educativa maneja un programa a seguir por parte de la Secretaria de Educacion Publica; Este prorama se puede entender como el marco de trabajo que los trabajadores de la educacion deberan tomar y adecuar un plan de trabajo de acuerdo a distintos factores: social, economico, geografico de la institucion a la que pertenecen. Con estos parametros, la direccion educativa debera generar un 'Diagnostico' por cada institucion, de la misma manerta sera encargado de generar el 'Programa Analitico' usando el marco de trabajo ya mencionado.
+
+# Problematica
+
+El personal encargado de supervisar la operacion educativa ha identificado: deficiente planificación educativa por parte del personal.
+
+---
+# Instrucciones del programa (Uso tecnico)
+-   Cargar el Diagnistico en formato pdf.
+-   Cargar programa analitico en formato .docx

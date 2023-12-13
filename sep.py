@@ -12,27 +12,43 @@ load_dotenv(find_dotenv())
 
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
-# Set your OpenAI API key
-
-file_path_diagnostico= '/Users/josue.ruiz/Documents/Projects/code/AI_Playground/proyecto-SEP/DIAGNOSTICO ESCOLAR MARIA IZQUIERDO 23-24.pdf'
-file_path_programa= '/Users/josue.ruiz/Documents/Projects/code/AI_Playground/proyecto-SEP/GRM PROGRAMA ANÁLITICO.docx'
+# file_path_diagnostico= '/Users/josue.ruiz/Documents/Projects/code/AI_Playground/proyecto-SEP/DIAGNOSTICO ESCOLAR MARIA IZQUIERDO 23-24.pdf'
+# docxPrograma= '/Users/josue.ruiz/Documents/Projects/code/AI_Playground/proyecto-SEP/GRM PROGRAMA ANÁLITICO.docx'
 
 ##read pdf files
-def read_pdf(file_path_diagnostico):
-    # Open the PDF file in binary read mode
-    with open(file_path_diagnostico, 'rb') as file:
+def read_pdf(pdfDiagnostico):
+    try:
         # Create a PDF reader object
-        pdf_reader = PyPDF2.PdfReader(file)
+        pdf_reader = PyPDF2.PdfReader(pdfDiagnostico)
 
         # Initialize a variable to store extracted text
         text = ''
 
         # Iterate through each page and extract text
-        # Iterate through each page and extract text
         for page in pdf_reader.pages:
             text += page.extract_text()
 
         return text
+    except Exception as e:
+        return str(e)
+
+
+
+    # ## this will take input from local repo
+    # # Open the PDF file in binary read mode
+    # with open(file_path_diagnostico, 'rb') as file:
+    #     # Create a PDF reader object
+    #     pdf_reader = PyPDF2.PdfReader(file)
+
+    #     # Initialize a variable to store extracted text
+    #     text = ''
+
+    #     # Iterate through each page and extract text
+    #     # Iterate through each page and extract text
+    #     for page in pdf_reader.pages:
+    #         text += page.extract_text()
+
+    #     return text
 
 # # Call the read_pdf function and store the returned text
 # extracted_text = read_pdf(file_path_diagnostico)
@@ -42,18 +58,31 @@ def read_pdf(file_path_diagnostico):
 
 
 ##read docx file
-def read_docx(file_path_programa):
+def read_docx(docxPrograma):
+
     try:
-        doc = Document(file_path_programa)
+        doc = Document(docxPrograma)
         full_text = []
 
         for para in doc.paragraphs:
             full_text.append(para.text)
 
         return '\n'.join(full_text)
-
     except Exception as e:
         return str(e)
+
+    # ## this will take input from local repo
+    # try:
+    #     doc = Document(docxPrograma)
+    #     full_text = []
+
+    #     for para in doc.paragraphs:
+    #         full_text.append(para.text)
+
+    #     return '\n'.join(full_text)
+
+    # except Exception as e:
+    #     return str(e)
 
 def cost_calculator_for_GPT_3_5_turbo_1106(response):
 
@@ -74,10 +103,10 @@ def cost_calculator_for_GPT_3_5_turbo_1106(response):
 
 
 
-diagnostico = read_pdf(file_path_diagnostico)
-#print (diagnostico)
-programa = read_docx(file_path_programa)
-context = [ {'role':'system', 'content':f""" {diagnostico}"""} ]  # accumulate messages
+# diagnostico = read_pdf(file_path_diagnostico)
+# #print (diagnostico)
+# programa = read_docx(docxPrograma)
+# context = [ {'role':'system', 'content':f""" {diagnostico}"""} ]  # accumulate messages
 
 
 # prompt = f"""
@@ -90,14 +119,21 @@ context = [ {'role':'system', 'content':f""" {diagnostico}"""} ]  # accumulate m
 
 # """
 
-prompt = f"""
-titulo de punto 5 del diagnostico
+# ahead_prompt = f"""
+# titulo de punto 5 del diagnostico
+# """
 
-diagnostico: ```{context}```
-programa analítico: ```{programa}```
+# prompt = f"""
+# prompt: ```{ahead_prompt}```
 
-"""
+# diagnostico: ```{context}```
+# programa analítico: ```{programa}```
 
+# """
+
+
+# def get_current_prompt():
+#     return ahead_prompt
 
 
 
@@ -110,7 +146,7 @@ def get_completion(prompt, model="gpt-3.5-turbo-1106"):
     return response
     #return response.model_dump()['choices'][0]['message']["content"]
 
-response = get_completion(prompt)
+#response = get_completion(prompt)
 #print(response.model_dump()['usage']['completion_tokens'])
-print(cost_calculator_for_GPT_3_5_turbo_1106(response))
-print(response.model_dump()['choices'][0]['message']["content"])
+# print(cost_calculator_for_GPT_3_5_turbo_1106(response))
+# print(response.model_dump()['choices'][0]['message']["content"])

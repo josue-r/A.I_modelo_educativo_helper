@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Document Analyzer</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"> <!-- Correct path for CSS -->
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sample image. Replace 'path_to_your_image.jpg' with your actual image path -->
+        <img src="{{ url_for('static', filename='images/smart.jpg') }}" alt="smart">
+
+        <h1>Upload Documents</h1>
+
+        <form id="uploadForm" method="post" enctype="multipart/form-data">
+            <label for="promptInput">Edit prompt:</label>
+            <textarea id="promptInput" name="promptInput" rows="4" cols="50">{{ promptInput }}</textarea> <!-- Display and edit the promptInput -->
+
+            <label for="pdfDiagnostico">Upload Diagnostico PDF File:</label>
+            <input type="file" id="pdfDiagnostico" name="pdfDiagnostico" required>
+
+            <label for="docxPrograma">Upload Programa DOCX File:</label>
+            <input type="file" id="docxPrograma" name="docxPrograma" required>
+
+            <button type="submit">Analyze</button>
+        </form>
+    </div>
+
+    <!-- Add this to your index.html where you want to show the response -->
+    <h2>Respuesta</h2>
+    <div id="responseDisplay" class="response-area"></div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('/process', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = JSON.stringify(data);
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();  // Prevents the default form submission action
+
+            const formData = new FormData(this);  // Create a FormData object from the form
+
+            // Use the Fetch API to send the form data to the server
+            fetch('/process', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())  // Parse the JSON response
+            .then(data => {
+                // Update the page with the response
+                document.getElementById('responseDisplay').textContent = data.response;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+
+</body>
+</html>
